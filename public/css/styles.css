@@ -8,35 +8,8 @@ body{
     display: flex;
     flex-direction: column;
 }
-/* .header{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: flex-start;
-    flex-wrap: wrap;
-}
-#head{
-    font-size: 10rem;
-    font-weight: 400;
-    text-decoration: none;
-    margin: 0;
-} */
-/* .nav-links a{
-    padding: .5em;
-} */
-/* .head{
-    width: 90%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-} */
 .main {
     margin: auto 0;
-    background-color: yellow !important;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
