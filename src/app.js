@@ -1,19 +1,34 @@
-const express = require('express')
-const path = require('path')
-const hbs = require('hbs')
-const geolocation = require('./utils/geolocation')
-const forecast = require('./utils/forecast')
+import express, { response } from 'express'
+import path from 'path'
+import hbs from 'hbs'
+import locationip from 'location-ip/location-ip.js'
+import forecast from './utils/forecast.js'
 
 const app = express()
 const port = process.env.PORT || 3000
 
 // Setting application configurations
 app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, '../templates/views'))
-app.use(express.static(path.join(__dirname, '../public')))
-hbs.registerPartials(path.join(__dirname, '../templates/partials'))
+console.log(process.cwd())
+app.set('views', path.join(process.cwd(), '/templates/views'))
+app.use(express.static(path.join(process.cwd(), '/public')))
+hbs.registerPartials(path.join(process.cwd(), '/templates/partials'))
 
 // JSON HTTP Endpoint
+app.get('/ipweather', (req, res)=>{
+    forecast((error, data)=>{
+        if(error)
+        {
+            return res.send(error)
+        }
+        locationip().then(locip=>{
+            return res.send({
+                weathermap: data,
+                locip
+            })
+        })
+    })
+})
 app.get('/weather', (req, res)=>{
     if (!req.query.address)
     {
@@ -26,16 +41,14 @@ app.get('/weather', (req, res)=>{
         {
             return res.send({Error: err})
         }
-        forecast(data.lat, data.long, (err, forecastdata)=>{
+        forecast.forecast(data.lat, data.long, (err, data)=>{
             if(err)
             {
                return res.send({Error: err})
             }
+            console.log(data)
             res.send({
-                weather_description: forecastdata.current.weather_descriptions[0],
-                temperature: forecastdata.current.temperature,
-                location: forecastdata.location.name + ', ' + forecastdata.location.region,
-                precip: forecastdata.current.precip
+                data
             })
         })
     })
@@ -43,9 +56,7 @@ app.get('/weather', (req, res)=>{
 
 // Application routes
 app.get('', (req, res)=>{
-    res.render('index', {
-        owner: 'Muhammad Abd-Elsattar'
-    })
+    res.render('index')
 })
 app.get('/about', (req, res)=>{
     res.render('about', {

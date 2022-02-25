@@ -1,16 +1,16 @@
-const request = require('request')
+import request from 'request'
+import locationip from 'location-ip/location-ip.js'
 
-// const url = 'http://api.weatherstack.com/current?access_key=286642bf688df609cb2a7f375ab46b92&query=fetch:ip'
-const forecast = (long, lat, callback)=>{
-    request(`http://api.weatherstack.com/current?access_key=9588c85065de2e1fd6395fc24e6c4448&query=${lat},${long}`, {json: true}, (err, res)=>{
-        if(err){
-            callback('Cannot contact Weatherstack currently!', undefined)
-        }
-        else
-        {
-            callback(undefined, res.body)
-        }
+const forecast = (callback)=>{
+    locationip().then(data=>{
+        request(`https://api.openweathermap.org/data/2.5/weather?lat=${data.location.latitude}&lon=${data.location.longitude}&appid=6decea5f402964f2a9dcef3edccbdfa1&units=metric`, {json: true}, (error, response)=>{
+            if(error)
+            {
+                return callback(error, undefined)
+            }
+            return callback(undefined, response.body)
+        })
     })
 }
 
-module.exports = forecast
+export default forecast
