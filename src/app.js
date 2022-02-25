@@ -22,6 +22,7 @@ app.get('/ipweather', (req, res)=>{
             return res.send(error)
         }
         locationip().then(locip=>{
+            console.log(locip.ip)
             return res.send({
                 weathermap: data,
                 locip
