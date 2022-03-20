@@ -1,15 +1,15 @@
-import express, { response } from 'express'
+import express from 'express'
 import path from 'path'
 import hbs from 'hbs'
-import locationip from 'location-ip/location-ip.js'
+import geolocation from './utils/geolocation.js'
 import forecast from './utils/forecast.js'
 
 const app = express()
+
 const port = process.env.PORT || 3000
 
 // Setting application configurations
 app.set('view engine', 'hbs')
-console.log(process.cwd())
 app.set('views', path.join(process.cwd(), '/templates/views'))
 app.use(express.static(path.join(process.cwd(), '/public')))
 hbs.registerPartials(path.join(process.cwd(), '/templates/partials'))
@@ -37,17 +37,16 @@ app.get('/weather', (req, res)=>{
             Error: 'Must provide an address!'
         })
     }
-    geolocation(req.query.address, (err, data)=>{
+    geolocation(req.query.address, (coords, err)=>{
         if(err)
         {
             return res.send({Error: err})
         }
-        forecast.forecast(data.lat, data.long, (err, data)=>{
+        forecast(coords, (data, err)=>{
             if(err)
             {
                return res.send({Error: err})
             }
-            console.log(data)
             res.send({
                 data
             })
@@ -76,6 +75,19 @@ app.get('/help/*', (req, res)=>{
         title: 'How can we help you',
         owner: 'Muhammad Abd-Elsattar',
         error: 'Oops! Cannot find this article'
+    })
+})
+app.get('/autolocation', (req, res)=>{
+    const latitude = req.query.lat
+    const longitude = req.query.long
+    forecast([longitude, latitude], (data, err)=>{
+        if(err)
+        {
+           return res.send({Error: err})
+        }
+        res.send({
+            data
+        })
     })
 })
 app.get('*', (req, res)=>{
