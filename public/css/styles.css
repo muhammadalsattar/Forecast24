@@ -1,9 +1,14 @@
+*{
+    background-color: #4a5a93;
+    color: white;
+    font-family: 'IBM Plex Serif', serif;
+}
 main {
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-evenly;
     align-items: center;
 }
@@ -11,8 +16,10 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
     margin: 1em;
+    height: 80%;
+    width: 50%;
 }
 .temperature-location{
     display: flex;
@@ -29,23 +36,78 @@ main {
 .info form input{
     font-size: 1.2em;
     padding: .7em;
-    border: 1px solid black;
+    border: 1px solid #233356;
     outline: none;
 }
 .info form button{
     font-size: 1.2em;
     padding: .7em;
-    border: 1px solid black;
-    background-color: black;
+    border: 1px solid #233356;
+    background-color: #233356;
     color: white;
     outline: none;
 }
+::placeholder{
+    color: #233356;
+    opacity: .5;
+}
 .info-image{
     display: flex;
+    width: 40%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 .info-image img{
-    width: 70%;
+    width: 85%;
 }
+.weather-data{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.weather-data div{
+    font-size: 1.4em;
+    margin: .4em;
+}
+
+@media only screen and (max-width: 722px) {
+    main {
+      flex-direction: column;
+    }
+    .info{
+        width: 80%;
+        display: flex;
+    }
+    .info-image{
+        width: 70%;
+        justify-content: center;
+        align-items: center;
+        height: 40%;
+    }
+    * {
+        font-size: 1em;
+    }
+    .info-image img{
+        width: 100%;
+    }
+}
+@media only screen and (max-width: 451px) {
+    main {
+      flex-direction: column;
+    }
+    .info{
+        width: 90%;
+        display: flex;
+    }
+    input, button{
+        font-size: .5em;
+    }
+    .info-image{
+        width: 70%;
+        margin-top: 1em !important;
+    }
+}
+  

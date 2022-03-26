@@ -16,5 +16,8 @@
     "location-ip": "^1.0.7",
     "nodemon": "^2.0.15",
     "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0"
   }
 }
