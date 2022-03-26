@@ -87,9 +87,6 @@ main {
         align-items: center;
         height: 40%;
     }
-    * {
-        font-size: 1em;
-    }
     .info-image img{
         width: 100%;
     }
