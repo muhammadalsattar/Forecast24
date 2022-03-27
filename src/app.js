@@ -14,22 +14,17 @@ app.set('views', path.join(process.cwd(), '/templates/views'))
 app.use(express.static(path.join(process.cwd(), '/public')))
 hbs.registerPartials(path.join(process.cwd(), '/templates/partials'))
 
-// JSON HTTP Endpoint
-app.get('/ipweather', (req, res)=>{
-    forecast((error, data)=>{
-        if(error)
-        {
-            return res.send(error)
-        }
-        locationip().then(locip=>{
-            console.log(locip.ip)
-            return res.send({
-                weathermap: data,
-                locip
-            })
-        })
+// Application routes
+app.get('', (req, res)=>{
+    res.render('index')
+})
+app.get('/about', (req, res)=>{
+    res.render('about', {
+        title: 'Who are we',
+        owner: 'Muhammad Abd-Elsattar'
     })
 })
+
 app.get('/weather', (req, res)=>{
     if (!req.query.address)
     {
@@ -54,29 +49,6 @@ app.get('/weather', (req, res)=>{
     })
 })
 
-// Application routes
-app.get('', (req, res)=>{
-    res.render('index')
-})
-app.get('/about', (req, res)=>{
-    res.render('about', {
-        title: 'Who are we',
-        owner: 'Muhammad Abd-Elsattar'
-    })
-})
-app.get('/help', (req, res)=>{
-    res.render('about', {
-        title: 'How can we help you',
-        owner: 'Muhammad Abd-Elsattar'
-    })
-})
-app.get('/help/*', (req, res)=>{
-    res.render('error', {
-        title: 'How can we help you',
-        owner: 'Muhammad Abd-Elsattar',
-        error: 'Oops! Cannot find this article'
-    })
-})
 app.get('/autolocation', (req, res)=>{
     const latitude = req.query.lat
     const longitude = req.query.long
@@ -90,12 +62,9 @@ app.get('/autolocation', (req, res)=>{
         })
     })
 })
+
 app.get('*', (req, res)=>{
-    res.render('error', {
-        title: 'Who are we',
-        owner: 'Muhammad Abd-Elsattar',
-        error: 'Oops! This page does not exist'
-    })
+    res.status(404).send()
 })
 
 // Starting server
