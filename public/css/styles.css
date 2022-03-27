@@ -1,7 +1,7 @@
 *{
     background-color: #4a5a93;
     color: white;
-    font-family: 'IBM Plex Serif', serif;
+    font-family: 'Roboto Mono', monospace;
 }
 main {
     width: 100vw;
@@ -48,7 +48,7 @@ main {
     outline: none;
 }
 ::placeholder{
-    color: #233356;
+    color: #dbdbdb;
     opacity: .5;
 }
 .info-image{
@@ -59,7 +59,7 @@ main {
     align-items: center;
 }
 .info-image img{
-    width: 85%;
+    width: 100%;
 }
 .weather-data{
     width: 100%;
@@ -69,13 +69,19 @@ main {
     align-items: center;
 }
 .weather-data div{
-    font-size: 1.4em;
+    font-size: 1.8em;
     margin: .4em;
 }
+.weather-data div span{
+    font-size: .65em;
+}
 
-@media only screen and (max-width: 722px) {
+@media only screen and (max-width: 778px) {
     main {
-      flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
     }
     .info{
         width: 80%;
@@ -83,28 +89,74 @@ main {
     }
     .info-image{
         width: 70%;
+        height: 40%;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 40%;
     }
     .info-image img{
-        width: 100%;
+        width: 80%;
+    }
+    .temperature-location{
+        margin: 1em;
+    }
+    .temperature-location h1{
+        font-size: 7em !important;
+    }
+    .temperature-location p{
+        font-size: 1.2em;
+    }
+    .info form input{
+        font-size: 1.2em;
+        padding: .7em;
+        border: 1px solid #233356;
+        outline: none;
+    }
+    .info form button{
+        font-size: 1.2em;
+        padding: .7em;
+        border: 1px solid #233356;
+        background-color: #233356;
+        color: white;
+        outline: none;
+    }
+    .weather-data div{
+        font-size: 1.4em;
+        margin: 1.2em;
     }
 }
-@media only screen and (max-width: 451px) {
-    main {
-      flex-direction: column;
-    }
+@media only screen and (max-width: 486px) {
     .info{
         width: 90%;
         display: flex;
     }
-    input, button{
-        font-size: .5em;
+    .temperature-location{
+        margin: .3em;
     }
-    .info-image{
-        width: 70%;
-        margin-top: 1em !important;
+    .temperature-location h1{
+        font-size: 6em !important;
+    }
+    .temperature-location p{
+        font-size: 1.2em;
+    }
+    .info form input{
+        font-size: 1em;
+        padding: .5em;
+        border: 1px solid #233356;
+        outline: none;
+    }
+    .info form button{
+        font-size: 1em;
+        padding: .5em;
+        border: 1px solid #233356;
+        background-color: #233356;
+        color: white;
+        outline: none;
+    }
+    .weather-data div{
+        font-size: 1.2em;
+        margin: .6em;
     }
 }
   
