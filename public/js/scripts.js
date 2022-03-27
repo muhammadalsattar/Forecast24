@@ -32,9 +32,9 @@ form.addEventListener('submit', (e)=>{
         console.log(data.data)
         temperature.textContent = `${Math.round(data.data.main.temp)}º`
         mylocation.textContent = `${data.data.name}, ${data.data.sys.country}`
-        description.textContent = `${data.data.weather[0].description}`
-        humidity.textContent = `Humidity: ${data.data.main.humidity}%`
-        wind.textContent = `Wind: ${data.data.wind.speed} m/s`
+        description.innerHTML = `${data.data.weather[0].description}`
+        humidity.innerHTML = `<span>Humidity</span> ${data.data.main.humidity}%`
+        wind.innerHTML = `<span>Wind</span> ${data.data.wind.speed} m/s`
     })
     input.value = ''
 })
