@@ -8,7 +8,7 @@ const wind = document.querySelector('.wind')
 
 
 
-document.addEventListener('DOMContentLoaded', ()=>{
+document.querySelector('#use-location').addEventListener('click', ()=>{
     window.navigator.geolocation.getCurrentPosition((response)=>{
         const latitude = response.coords.latitude
         const longitude = response.coords.longitude
@@ -29,7 +29,7 @@ form.addEventListener('submit', (e)=>{
     fetch(`/weather?address=${input.value}`)
     .then(response => response.json())
     .then(data =>{
-        console.log(data.data)
+        console.log(data)
         temperature.textContent = `${Math.round(data.data.main.temp)}º`
         mylocation.textContent = `${data.data.name}, ${data.data.sys.country}`
         description.innerHTML = `${data.data.weather[0].description}`
