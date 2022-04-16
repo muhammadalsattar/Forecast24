@@ -7,15 +7,15 @@
   * Open Weather Map: to fetch weather information
 
 ### Forecast handles request through two main endpoint:
-  1. `/weather?address={place}`:
-    * calls two main functions: forecast(), geolocation() to get the data.
-    * returns a JSON formatted response with {place} weather details.
-    * later, the application front-end renders the response to users as part of a beautiful responsive user interface.
-  2. `/autolocation?lat={latitude}&long={longitude}`:
-    * uses user's current location to fetch weather data for this location.
-    * calls two main functions: forecast(), geolocation() to get the data.
-    * returns a JSON formatted response with the user's current location weather details.
-    * later, the application front-end renders the response to users as part of a beautiful responsive user interface.
+  1. `/weather?address={place}`: <br>
+    ● calls two main functions: forecast(), geolocation() to get the data. <br>
+    ● returns a JSON formatted response with {place} weather details. <br>
+    ● later, the application front-end renders the response to users as part of a beautiful responsive user interface. <br>
+  2. `/autolocation?lat={latitude}&long={longitude}`: <br>
+    ● uses user's current location to fetch weather data for this location. <br>
+    ● calls two main functions: forecast(), geolocation() to get the data. <br>
+    ● returns a JSON formatted response with the user's current location weather details. <br>
+    ● later, the application front-end renders the response to users as part of a beautiful responsive user interface. <br>
 
 ### Tools:
   * Node.js
