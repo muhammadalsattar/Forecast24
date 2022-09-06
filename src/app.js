@@ -1,12 +1,14 @@
 import express from 'express'
 import path from 'path'
 import hbs from 'hbs'
-import geolocation from './utils/geolocation.js'
-import forecast from './utils/forecast.js'
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import {getGeolocation, getWeather}from './utils/utils.js'
 
 const app = express()
-
-const port = process.env.PORT || 3000
+app.use(bodyParser.json())
+app.use(cors())
+const port = process.env.PORT || 4000
 
 // Setting application configurations
 app.set('view engine', 'hbs')
@@ -14,58 +16,28 @@ app.set('views', path.join(process.cwd(), '/templates/views'))
 app.use(express.static(path.join(process.cwd(), '/public')))
 hbs.registerPartials(path.join(process.cwd(), '/templates/partials'))
 
-// Application routes
-app.get('', (req, res)=>{
-    res.render('index')
-})
-app.get('/about', (req, res)=>{
-    res.render('about', {
-        title: 'Who are we',
-        owner: 'Muhammad Abd-Elsattar'
-    })
+app.get('/', (req, res)=>{
+    res.render('index.hbs')
 })
 
-app.get('/weather', (req, res)=>{
-    if (!req.query.address)
-    {
-        return res.send({
-            Error: 'Must provide an address!'
-        })
+app.post('/weather', async (req, res) => {
+    let result;
+    if(req.body.query){
+        try
+        {
+        const geolocation = await getGeolocation(req.body.query)
+        result = await getWeather(geolocation)
+        }
+        catch(e){
+            res.send({error: e})
+        }
+        res.send(result)
+    } else{
+        result = await getWeather(req.body.geolocation)
+        res.send(result)
     }
-    geolocation(req.query.address, (coords, err)=>{
-        if(err)
-        {
-            return res.send({Error: err})
-        }
-        forecast(coords, (data, err)=>{
-            if(err)
-            {
-               return res.send({Error: err})
-            }
-            res.send({
-                data
-            })
-        })
-    })
 })
 
-app.get('/autolocation', (req, res)=>{
-    const latitude = req.query.lat
-    const longitude = req.query.long
-    forecast([longitude, latitude], (data, err)=>{
-        if(err)
-        {
-           return res.send({Error: err})
-        }
-        res.send({
-            data
-        })
-    })
-})
-
-app.get('*', (req, res)=>{
-    res.status(404).send()
-})
 
 // Starting server
 app.listen(port, ()=>{
